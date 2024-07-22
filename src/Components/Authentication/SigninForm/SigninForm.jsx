@@ -5,11 +5,10 @@ import { useFormik } from "formik";
 import axios from "axios";
 import TextField from "@mui/material/TextField";
 import Divider from "@mui/material/Divider";
-import { Box, Link, Stack, Typography } from "@mui/material";
+import { Box, Button, Link, Stack, Typography } from "@mui/material";
 
 import { BaseApi } from "../../../util/BaseApi.js";
 import toast from "react-hot-toast";
-import Buttons from "Ui/Buttons.tsx";
 import SigninData from "./Input.tsx";
 
 export default function SigninForm() {
@@ -103,7 +102,7 @@ export default function SigninForm() {
             Forget password?
           </Link>
         </Typography>
-        <Buttons bgColor="bg-customGreen">Sign in</Buttons>
+        <Button>Sign in</Button>
 
         <Divider sx={{ width: { xs: "90%", sm: "400px" } }}>OR</Divider>
 

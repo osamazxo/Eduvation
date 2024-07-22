@@ -1,28 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { Form, Link as RouterLink, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import axios from "axios";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import {
-  Alert,
-  Checkbox,
-  Divider,
-  FormControlLabel,
-  Link,
-  Stack,
-  Typography,
-} from "@mui/material";
-import { LoadingButton } from "@mui/lab";
+import { Button, Divider, Link, Stack, Typography } from "@mui/material";
 import { BaseApi } from "../../../util/BaseApi.js";
 import toast from "react-hot-toast";
 import SignupData from "./Input.tsx";
-import Buttons from "Ui/Buttons.tsx";
 export default function SignupForm() {
   let nav = useNavigate();
 
-  
   const validationSchema = yup.object().shape({
     userName: yup.string().required("Username is required"),
     email: yup
@@ -39,7 +28,6 @@ export default function SignupForm() {
       .required("Confirm password is required"),
   });
   const handleSignup = async (values) => {
-
     let { data } = await axios
       .post(`${BaseApi}/auth/SignUp`, values)
       .catch((err) => {
@@ -50,10 +38,8 @@ export default function SignupForm() {
             color: "#F2C791",
           },
         });
-       
       });
     if (data.message === "Done") {
-     
       toast.success("Successfully ! please check your Email", {
         icon: "👏",
         style: {
@@ -80,7 +66,6 @@ export default function SignupForm() {
   return (
     <Form onSubmit={formik.handleSubmit}>
       <Stack spacing={1} padding={"4px"} direction="column" alignItems="center">
-
         {SignupData.map((input, index) => {
           return (
             <TextField
@@ -93,8 +78,7 @@ export default function SignupForm() {
                 formik.touched[input.name] !== undefined
               }
               helperText={
-                formik.errors[input.name] &&
-                formik.touched[input.name]
+                formik.errors[input.name] && formik.touched[input.name]
                   ? formik.errors[input.name]
                   : ""
               }
@@ -103,10 +87,9 @@ export default function SignupForm() {
               value={formik.values[input.name]}
               size="small"
               sx={{ width: { xs: "90%", sm: "400px" } }}
-              />
-          )
+            />
+          );
         })}
-      
 
         <Box
           sx={{
@@ -115,11 +98,9 @@ export default function SignupForm() {
             alignItems: "center",
             justifyContent: "flex-start",
           }}
-        >
-         
-        </Box>
+        ></Box>
 
-        <Buttons bgColor="bg-customGreen">Sign up</Buttons>
+        <Button>Sign up</Button>
         <Divider sx={{ width: { xs: "90%", sm: "400px" } }}>OR</Divider>
 
         <Typography

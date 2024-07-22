@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import Opetions from "./Opations";
 import axios from "axios";
 import { BaseApi } from "util/BaseApi";
-import { Box, Button, Rating, Typography } from "@mui/material";
+import { Box, Rating } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { allContext } from "Context/Context";
 

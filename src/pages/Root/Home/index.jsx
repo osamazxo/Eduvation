@@ -5,8 +5,8 @@ import TopAdverisement from "./components/TopAdvertisement";
 import WorkshopOverview from "./components/WorkshopOverview";
 import RecommendedCourses from "./components/RecommendedCourses";
 import FocusGroupsOverview from "./components/FocusGroupsOverview";
-import TopWorkshops from "Components/Home/TopWorkshops";
 import Footer from "Components/Footer/Footer";
+import TopWorkshops from "./components/TopWorkshops";
 
 const Home = () => {
   return (

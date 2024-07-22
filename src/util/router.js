@@ -1,6 +1,7 @@
 import { Suspense, lazy } from "react";
 import Layout from "../pages/Layout/Layout";
 import { createBrowserRouter } from "react-router-dom";
+import InstructorLayout from "pages/Instructor/Layout.jsx";
 
 /* salah's routes*/
 import Signin from "../pages/Signin/Signin";
@@ -12,15 +13,8 @@ import NotFound from "../pages/NotFound/NotFound.jsx";
 import CoursesPage from "../pages/SubCategory/CoursesPage.jsx";
 import Profile from "../pages/Profile/Profile.jsx";
 import Loading from "../Components/LoadingSpinner/index.jsx";
-import InstructorLayout from "../pages/Instructor/Layout.jsx";
-import Setting from "../pages/Setting/Setting.jsx";
-import CourseDetails from "../pages/CourseDetails/CourseDetails.jsx";
 import MyCourses from "../pages/UserCourses/MyCourses.jsx";
 import Search from "Components/Search/Search.jsx";
-import Settings from "../pages/Setting/Setting.jsx";
-import Chapter from "pages/Chapters/Chapter.jsx";
-import Curriculum from "pages/Curriculum/Curriculum.jsx";
-import Content from "pages/Content/Content.tsx";
 
 // global routes
 const WorkshopsRoot = lazy(() => import("../pages/Root/Workshops/index.jsx"));
@@ -78,16 +72,10 @@ const StudentWorkshops = lazy(() =>
 );
 const StudentBilling = lazy(() => import("../pages/Student/Billing/index.jsx"));
 
-// let ProtectedRouter = (props) => {
-//   if (localStorage.getItem("token") == null) {
-//     return <Navigate to="/signin" />;
-//   } else {
-//     return props.children;
-//   }
-// };
 const SuspenseWrapper = (props) => {
   return <Suspense fallback={<Loading />}>{props.children}</Suspense>;
 };
+
 const router = createBrowserRouter([
   // public routes
   {
@@ -113,24 +101,11 @@ const router = createBrowserRouter([
       },
       // { path: "course/:id", element: <CoursesPage /> },
       { path: "course", element: <CoursesPage /> },
-
-      { path: "Chapter/:id", element: <Chapter /> },
       { path: "profile", element: <Profile /> },
-      { path: "setting", element: <Settings /> },
       { path: "courses", element: <CoursesPage /> },
-
-      { path: "Chapter/:id", element: <Chapter /> },
       { path: "profile", element: <Profile /> },
-      { path: "setting", element: <Setting /> },
-
-      { path: "courseDetails/:id", element: <CourseDetails /> },
       { path: "myCourse", element: <MyCourses /> },
-
-      { path: "curriculum/:id/:chapter/:title", element: <Curriculum /> },
-      { path: "content/:type/:id", element: <Content /> },
-
       { path: "search/:title", element: <Search /> },
-
       {
         path: "workshops",
         children: [
