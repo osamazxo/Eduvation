@@ -1,18 +1,23 @@
 import { Box } from "@mui/material";
 import React from "react";
 import HeroSection from "./components/HeroSection";
-import Header from "./components/Header";
+import TopAdverisement from "./components/TopAdvertisement";
+import WorkshopOverview from "./components/WorkshopOverview";
+import RecommendedCourses from "./components/RecommendedCourses";
+import FocusGroupsOverview from "./components/FocusGroupsOverview";
+import TopWorkshops from "Components/Home/TopWorkshops";
+import Footer from "Components/Footer/Footer";
 
 const Home = () => {
   return (
-    <Box
-      sx={{
-        userSelect: "none",
-      }}
-    >
-      <Header />
+    <Box>
+      <TopAdverisement />
       <HeroSection />
-      <HeroSection />
+      <WorkshopOverview />
+      <RecommendedCourses />
+      <FocusGroupsOverview />
+      <TopWorkshops />
+      <Footer />
     </Box>
   );
 };

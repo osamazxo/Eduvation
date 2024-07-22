@@ -1,6 +1,5 @@
 import { Suspense, lazy } from "react";
 import Layout from "../pages/Layout/Layout";
-import Home from "../pages/Home/Home.jsx";
 import { createBrowserRouter } from "react-router-dom";
 
 /* salah's routes*/
@@ -27,7 +26,7 @@ import Content from "pages/Content/Content.tsx";
 const WorkshopsRoot = lazy(() => import("../pages/Root/Workshops/index.jsx"));
 const WorkshopRoot = lazy(() => import("../pages/Root/Workshop/index.jsx"));
 const Logout = lazy(() => import("../pages/Root/Logout/index.jsx"));
-const HomeDemo = lazy(() => import("../pages/Root/Home/index.jsx"));
+const HomePage = lazy(() => import("../pages/Root/Home/index.jsx"));
 
 // instructor routes
 const InstructorDashboard = lazy(() =>
@@ -97,7 +96,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />,
+        element: <HomePage />,
       },
       { path: "signin", element: <Signin /> },
       { path: "signup", element: <Signup /> },
@@ -114,21 +113,21 @@ const router = createBrowserRouter([
       },
       // { path: "course/:id", element: <CoursesPage /> },
       { path: "course", element: <CoursesPage /> },
-   
+
       { path: "Chapter/:id", element: <Chapter /> },
       { path: "profile", element: <Profile /> },
       { path: "setting", element: <Settings /> },
       { path: "courses", element: <CoursesPage /> },
-      
+
       { path: "Chapter/:id", element: <Chapter /> },
       { path: "profile", element: <Profile /> },
       { path: "setting", element: <Setting /> },
 
       { path: "courseDetails/:id", element: <CourseDetails /> },
       { path: "myCourse", element: <MyCourses /> },
-     
-      {path:"curriculum/:id/:chapter/:title",element:<Curriculum />},
-      {path:"content/:type/:id",element:<Content />},
+
+      { path: "curriculum/:id/:chapter/:title", element: <Curriculum /> },
+      { path: "content/:type/:id", element: <Content /> },
 
       { path: "search/:title", element: <Search /> },
 
@@ -431,14 +430,6 @@ const router = createBrowserRouter([
         ),
       },
     ],
-  },
-  {
-    path: "home-demo",
-    element: (
-      <SuspenseWrapper>
-        <HomeDemo />
-      </SuspenseWrapper>
-    ),
   },
 ]);
 export default router;

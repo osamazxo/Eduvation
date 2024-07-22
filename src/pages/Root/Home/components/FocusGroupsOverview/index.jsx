@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
 import ChatImage from "assets/images/chat_screenshot.png";
-const FocusGroups = () => {
+const FocusGroupsOverview = () => {
   return (
     <Box
       className="flex flex-col gap-8 items-center"
@@ -33,4 +33,4 @@ const FocusGroups = () => {
   );
 };
 
-export default FocusGroups;
+export default FocusGroupsOverview;
