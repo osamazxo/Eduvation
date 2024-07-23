@@ -7,9 +7,10 @@ import TextField from "@mui/material/TextField";
 import Divider from "@mui/material/Divider";
 import { Box, Button, Link, Stack, Typography } from "@mui/material";
 
-import { BaseApi } from "../../../util/BaseApi.js";
+import { BaseApi } from "../../../../../util/BaseApi.js";
 import toast from "react-hot-toast";
 import SigninData from "./Input.tsx";
+import { LoadingButton } from "@mui/lab";
 
 export default function SigninForm() {
   let nav = useNavigate();
@@ -97,12 +98,22 @@ export default function SigninForm() {
           </React.Fragment>
         ))}
 
-        <Typography variant="body2" sx={{ float: "right" }}>
-          <Link to={"/sendEmail"} className="float-end" component={RouterLink}>
-            Forget password?
-          </Link>
+        <Typography
+          component={Link}
+          to={"/reset-password"}
+          variant="body2"
+          sx={{ float: "right" }}
+        >
+          Forget password?
         </Typography>
-        <Button>Sign in</Button>
+        <LoadingButton
+          type="submit"
+          loading={loading}
+          variant="contained"
+          sx={{ width: { xs: "90%", sm: "400px" } }}
+        >
+          Sign in
+        </LoadingButton>
 
         <Divider sx={{ width: { xs: "90%", sm: "400px" } }}>OR</Divider>
 

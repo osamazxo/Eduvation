@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import React from "react";
-import SigninForm from "../../Components/Authentication/SigninForm/SigninForm";
-import AuthTemplate from "../../Components/Authentication/AuthTemplate/AuthTemplate";
+import AuthTemplate from "./components/AuthTemplate";
+import SigninForm from "./components/SigninForm";
 function Signin() {
   return (
     <AuthTemplate>

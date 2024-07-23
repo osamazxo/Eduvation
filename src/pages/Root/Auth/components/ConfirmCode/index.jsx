@@ -1,17 +1,15 @@
 import React, { useState } from "react";
-import { Form, useNavigate } from "react-router-dom";
+import { Form } from "react-router-dom";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import axios from "axios";
 import TextField from "@mui/material/TextField";
-import { Alert, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import AuthTemplate from './../../../Components/Authentication/AuthTemplate/AuthTemplate.jsx'
-import SendIcon from '@mui/icons-material/Send';
-import { BaseApi } from "../../../util/BaseApi.js";
+import SendIcon from "@mui/icons-material/Send";
 import toast from "react-hot-toast";
-export default function ConfirmCode() {
-  let nav = useNavigate();
+import { BaseApi } from "util/BaseApi";
+export default function ConfirmCode({ setCurrentStep }) {
   let [loading, setLoading] = useState(false);
 
   const validationSchema = yup.object().shape({
@@ -22,29 +20,30 @@ export default function ConfirmCode() {
     let { data } = await axios
       .patch(`${BaseApi}/auth/verifyCode`, values)
       .catch((err) => {
-        toast.error(err.response.data.message,{ style: {
-          borderRadius: '10px',
-          background: '#1B0A26',
-          color: '#F2C791',
-        }})
+        toast.error(err.response.data.message, {
+          style: {
+            borderRadius: "10px",
+            background: "#1B0A26",
+            color: "#F2C791",
+          },
+        });
         setLoading(false);
       });
-     
+
     if (data.message === "Done") {
-      localStorage.setItem('TokenCode',data.token)
+      localStorage.setItem("TokenCode", data.token);
 
       setLoading(false);
-      toast.success('Well Done!',{
-        icon: '👏',
+      toast.success("Well Done!", {
+        icon: "👏",
         style: {
-          borderRadius: '10px',
-          background: '#1B0A26',
-          color: '#F2C791',
+          borderRadius: "10px",
+          background: "#1B0A26",
+          color: "#F2C791",
         },
-      })
-      nav('/updatePassword')
-  
-  }
+      });
+      setCurrentStep(2);
+    }
   };
   const formik = useFormik({
     initialValues: {
@@ -56,21 +55,23 @@ export default function ConfirmCode() {
   });
 
   return (
-    <>
-      <AuthTemplate>
-      <Stack alignItems="center" height={"100%"} gap={5}>
-          <Typography
-            variant="h1"
-            fontSize={"3em"}
-            mt={8}
-            mb={3}
-            color='primary.main'
-            fontWeight={600}
-          >
-            Eduvation
-          </Typography>
-       
-          <Typography variant="body1" color={'secondary.main'} sx={{ width: { xs: "90%", sm: "400px" } }}>
+    <Stack alignItems="center" height={"100%"} gap={3}>
+      <Typography
+        variant="h1"
+        fontSize={"3em"}
+        mt={8}
+        mb={3}
+        color="primary.main"
+        fontWeight={600}
+      >
+        Eduvation
+      </Typography>
+
+      <Typography
+        variant="body1"
+        color="text.secondary"
+        sx={{ width: { xs: "90%", sm: "400px" } }}
+      >
         We have sent you a code to your email. please type the code here to
         reset your password.
       </Typography>
@@ -90,13 +91,15 @@ export default function ConfirmCode() {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.code}
-          error={formik.errors.code && formik.touched.code  !== undefined}
-          helperText={formik.errors.code&& formik.touched.code ? formik.errors.code : ""}
+          error={formik.errors.code && formik.touched.code !== undefined}
+          helperText={
+            formik.errors.code && formik.touched.code ? formik.errors.code : ""
+          }
           name="code"
           sx={{ width: "100%" }}
         />
         <LoadingButton
-          loading={loading?loading:''}
+          loading={loading ? loading : ""}
           variant="contained"
           type="submit"
           sx={{
@@ -104,16 +107,13 @@ export default function ConfirmCode() {
             height: "48x",
             borderRadius: "25px",
             fontSize: "20px",
-            color:"white"
+            color: "white",
           }}
-          endIcon={<SendIcon/>}
+          endIcon={<SendIcon />}
         >
           Send
         </LoadingButton>
       </Stack>
-      </Stack>
-    </AuthTemplate>
-   
-    </>
+    </Stack>
   );
 }

@@ -4,12 +4,6 @@ import { createBrowserRouter } from "react-router-dom";
 import InstructorLayout from "pages/Instructor/Layout.jsx";
 
 /* salah's routes*/
-import Signin from "../pages/Signin/Signin";
-import Signup from "../pages/Signup/Signup";
-import ConfirmCode from "../pages/Forget_password/ConfirmCode/ConfirmCode";
-import UpdatePasswordForm from "../pages/Forget_password/UpdatePasswordForm/UpdatePasswordForm";
-import SendEmail from "../pages/Forget_password/SendEmail/SendEmail.jsx";
-import NotFound from "../pages/NotFound/NotFound.jsx";
 import CoursesPage from "../pages/SubCategory/CoursesPage.jsx";
 import Profile from "../pages/Profile/Profile.jsx";
 import Loading from "../Components/LoadingSpinner/index.jsx";
@@ -17,10 +11,15 @@ import MyCourses from "../pages/UserCourses/MyCourses.jsx";
 import Search from "Components/Search/Search.jsx";
 
 // global routes
+const HomePage = lazy(() => import("../pages/Root/Home/index.jsx"));
+const Signup = lazy(() => import("../pages/Root/Auth/Signup.jsx"));
+const Signin = lazy(() => import("../pages/Root/Auth/Signin.jsx"));
+const ResetPassword = lazy(() =>
+  import("../pages/Root/Auth/ResetPassword.jsx")
+);
+const Logout = lazy(() => import("../pages/Root/Logout/index.jsx"));
 const WorkshopsRoot = lazy(() => import("../pages/Root/Workshops/index.jsx"));
 const WorkshopRoot = lazy(() => import("../pages/Root/Workshop/index.jsx"));
-const Logout = lazy(() => import("../pages/Root/Logout/index.jsx"));
-const HomePage = lazy(() => import("../pages/Root/Home/index.jsx"));
 
 // instructor routes
 const InstructorDashboard = lazy(() =>
@@ -84,13 +83,36 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <HomePage />,
+        element: (
+          <SuspenseWrapper>
+            <HomePage />
+          </SuspenseWrapper>
+        ),
       },
-      { path: "signin", element: <Signin /> },
-      { path: "signup", element: <Signup /> },
-      { path: "sendEmail", element: <SendEmail /> },
-      { path: "sendCode", element: <ConfirmCode /> },
-      { path: "updatePassword", element: <UpdatePasswordForm /> },
+      {
+        path: "signup",
+        element: (
+          <SuspenseWrapper>
+            <Signup />
+          </SuspenseWrapper>
+        ),
+      },
+      {
+        path: "signin",
+        element: (
+          <SuspenseWrapper>
+            <Signin />
+          </SuspenseWrapper>
+        ),
+      },
+      {
+        path: "reset-password",
+        element: (
+          <SuspenseWrapper>
+            <ResetPassword />
+          </SuspenseWrapper>
+        ),
+      },
       {
         path: "logout",
         element: (
@@ -128,7 +150,14 @@ const router = createBrowserRouter([
         ],
       },
 
-      { path: "*", element: <NotFound /> },
+      {
+        path: "*",
+        element: (
+          <SuspenseWrapper>
+            <Error404 redirectTo={"/"} />
+          </SuspenseWrapper>
+        ),
+      },
     ],
   },
 

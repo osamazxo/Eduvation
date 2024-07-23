@@ -1,7 +1,7 @@
-import { Grid, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import React from "react";
-import SignupForm from "../../Components/Authentication/SignupForm/SignupForm";
-import AuthTemplate from "../../Components/Authentication/AuthTemplate/AuthTemplate";
+import AuthTemplate from "./components/AuthTemplate";
+import SignupForm from "./components/SignupForm";
 function Signup() {
   return (
     <AuthTemplate>

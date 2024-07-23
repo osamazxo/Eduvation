@@ -1,17 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Link as RouterLink, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import axios from "axios";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { Button, Divider, Link, Stack, Typography } from "@mui/material";
-import { BaseApi } from "../../../util/BaseApi.js";
+import { Divider, Link, Stack, Typography } from "@mui/material";
+import { BaseApi } from "../../../../../util/BaseApi.js";
 import toast from "react-hot-toast";
 import SignupData from "./Input.tsx";
+import { LoadingButton } from "@mui/lab";
 export default function SignupForm() {
   let nav = useNavigate();
-
+  const [loading, setLoading] = useState(false);
   const validationSchema = yup.object().shape({
     userName: yup.string().required("Username is required"),
     email: yup
@@ -28,6 +29,7 @@ export default function SignupForm() {
       .required("Confirm password is required"),
   });
   const handleSignup = async (values) => {
+    setLoading(true);
     let { data } = await axios
       .post(`${BaseApi}/auth/SignUp`, values)
       .catch((err) => {
@@ -39,6 +41,7 @@ export default function SignupForm() {
           },
         });
       });
+    setLoading(false);
     if (data.message === "Done") {
       toast.success("Successfully ! please check your Email", {
         icon: "👏",
@@ -90,7 +93,6 @@ export default function SignupForm() {
             />
           );
         })}
-
         <Box
           sx={{
             width: { xs: "90%", sm: "400px" },
@@ -99,13 +101,18 @@ export default function SignupForm() {
             justifyContent: "flex-start",
           }}
         ></Box>
-
-        <Button>Sign up</Button>
+        <LoadingButton
+          type="submit"
+          loading={loading}
+          variant="contained"
+          sx={{ width: { xs: "90%", sm: "400px" } }}
+        >
+          Sign up
+        </LoadingButton>{" "}
         <Divider sx={{ width: { xs: "90%", sm: "400px" } }}>OR</Divider>
-
         <Typography
           variant="body2"
-          color="secondary.main"
+          color="text.secondary"
           marginY={"5px !important"}
         >
           Already have an account?{" "}

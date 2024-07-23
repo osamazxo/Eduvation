@@ -6,18 +6,21 @@ import axios from "axios";
 import TextField from "@mui/material/TextField";
 import { Stack, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import AuthTemplate from './../../../Components/Authentication/AuthTemplate/AuthTemplate.jsx'
-import { BaseApi } from "../../../util/BaseApi.js";
 import toast from "react-hot-toast";
+import AuthTemplate from "pages/Root/Auth/components/AuthTemplate/index.jsx";
+import { BaseApi } from "util/BaseApi";
 
-export default function UpdatePasswordForm() {
+export default function NewPassword({ setCurrentStep }) {
   let nav = useNavigate();
   let [loading, setLoading] = useState(false);
   const headers = {
-    token: localStorage.getItem('TokenCode'),
-  }
+    token: localStorage.getItem("TokenCode"),
+  };
   const validationSchema = yup.object().shape({
-    password: yup.string().required("Password is required").min(8,"Please length greater than 8"),
+    password: yup
+      .string()
+      .required("Password is required")
+      .min(8, "Please length greater than 8"),
     cPassword: yup
       .string()
       .oneOf([yup.ref("password"), null], "Passwords must match")
@@ -25,31 +28,33 @@ export default function UpdatePasswordForm() {
   });
 
   const HandelRegistar = async (values) => {
- 
     setLoading(true);
-    let {data}=await axios.patch(`${BaseApi}/auth/changePassword`,values,{headers})
-    .catch((err) => {
-      toast.error(err.response.data.message,{ style: {
-        borderRadius: '10px',
-        background: '#1B0A26',
-        color: '#F2C791',
-      }})
+    let { data } = await axios
+      .patch(`${BaseApi}/auth/changePassword`, values, { headers })
+      .catch((err) => {
+        toast.error(err.response.data.message, {
+          style: {
+            borderRadius: "10px",
+            background: "#1B0A26",
+            color: "#F2C791",
+          },
+        });
+        setLoading(false);
+      });
+
+    if (data.message === "Done") {
       setLoading(false);
-    });
-  
-  if (data.message === "Done") {
-    setLoading(false);
-    toast.success('Successfully Updated  !',{
-      icon: '👏',
-      style: {
-        borderRadius: '10px',
-        background: '#1B0A26',
-        color: '#F2C791',
-      },
-    })
-    nav('/signin')
-  }
-  
+      toast.success("Successfully Updated  !", {
+        icon: "👏",
+        style: {
+          borderRadius: "10px",
+          background: "#1B0A26",
+          color: "#F2C791",
+        },
+      });
+      setCurrentStep(0);
+      nav("/signin");
+    }
   };
   const formik = useFormik({
     initialValues: {
@@ -62,21 +67,23 @@ export default function UpdatePasswordForm() {
   });
 
   return (
-    <>
-      <AuthTemplate>
-      <Stack alignItems="center" height={"100%"} gap={5}>
-          <Typography
-            variant="h1"
-            fontSize={"3em"}
-            mt={8}
-            mb={3}
-            color='primary.main'
-            fontWeight={600}
-          >
-            Eduvation
-          </Typography>
-      
-          <Typography variant="body1" color='secondary.main' sx={{ width: { xs: "90%", sm: "400px" } }}>
+    <Stack alignItems="center" height={"100%"} gap={3}>
+      <Typography
+        variant="h1"
+        fontSize={"3em"}
+        mt={8}
+        mb={3}
+        color="primary.main"
+        fontWeight={600}
+      >
+        Eduvation
+      </Typography>
+
+      <Typography
+        variant="body1"
+        color="text.secondary"
+        sx={{ width: { xs: "90%", sm: "400px" } }}
+      >
         Enter your new password.
       </Typography>
       <Stack
@@ -94,8 +101,14 @@ export default function UpdatePasswordForm() {
           type="password"
           autoComplete="current-password"
           required
-          error={formik.errors.password && formik.touched.password !== undefined}
-          helperText={formik.errors.password && formik.touched.password? formik.errors.password: ""}
+          error={
+            formik.errors.password && formik.touched.password !== undefined
+          }
+          helperText={
+            formik.errors.password && formik.touched.password
+              ? formik.errors.password
+              : ""
+          }
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.password}
@@ -108,8 +121,14 @@ export default function UpdatePasswordForm() {
           type="password"
           autoComplete="current-password"
           required
-          error={formik.errors.cPassword && formik.touched.cPassword  !== undefined}
-          helperText={formik.errors.cPassword&& formik.touched.cPassword ? formik.errors.cPassword : ""}
+          error={
+            formik.errors.cPassword && formik.touched.cPassword !== undefined
+          }
+          helperText={
+            formik.errors.cPassword && formik.touched.cPassword
+              ? formik.errors.cPassword
+              : ""
+          }
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.cPassword}
@@ -117,7 +136,7 @@ export default function UpdatePasswordForm() {
           sx={{ width: { xs: "90%", sm: "400px" } }}
         />
         <LoadingButton
-          loading={loading?loading:''}
+          loading={loading ? loading : ""}
           variant="contained"
           type="submit"
           sx={{
@@ -126,15 +145,12 @@ export default function UpdatePasswordForm() {
             borderRadius: "25px",
             fontSize: "20px",
             marginTop: "35px",
-           color:"white"
+            color: "white",
           }}
         >
           RESET PASSWORD
         </LoadingButton>
       </Stack>
-      </Stack>
-    </AuthTemplate>
-     
-    </>
+    </Stack>
   );
 }
