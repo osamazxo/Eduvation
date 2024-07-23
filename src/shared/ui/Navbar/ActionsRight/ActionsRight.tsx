@@ -6,8 +6,6 @@ import NotificationButton from "./NotificationButton";
 import CartButton from "./CartButton";
 import WishlistButton from "./WishlistButton";
 import { getAuthToken } from "util/auth";
-import CartItems from "Components/Nav/CartItems";
-import WishlistItems from "Components/Nav/Wishlist";
 
 function ActionsRight({
   visibleIcons = {
@@ -22,10 +20,10 @@ function ActionsRight({
   return (
     <Stack direction="row" alignItems="center">
       {visibleIcons.themeMode && <ThemeModeButton />}{" "}
-      {visibleIcons.cart && <CartItems />}
+      {visibleIcons.cart && <CartButton />}
       {authToken && (
         <>
-          {visibleIcons.wishlist && <WishlistItems />}
+          {visibleIcons.wishlist && <WishlistButton />}
           {visibleIcons.notification && <NotificationButton />}
         </>
       )}

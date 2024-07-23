@@ -1,10 +1,18 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { AppBar, Box, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import SearchBar from "./SearchBar";
 import Link from "@mui/material/Link";
 import ActionsRight from "../ActionsRight/ActionsRight.tsx";
+import { useIsAuth } from "api/global/auth.tsx";
 
+const CustomLink = ({ to, label }) => {
+  return (
+    <Typography component={Link} to={to} color="text.primary" fontWeight="500">
+      {label}
+    </Typography>
+  );
+};
 export default function NavbarFull({
   visibleIcons = {
     wishlist: true,
@@ -14,26 +22,31 @@ export default function NavbarFull({
     themeMode: true,
   },
 }) {
+  const { data: isAuth } = useIsAuth();
+  console.log("isAuth ", isAuth);
   return (
-    <AppBar
-      elevation={0}
+    <Box
+      component="header"
       sx={{
         display: "flex",
-        flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        height: "45px",
-        paddingX: ".8em",
-        borderBottom: ".5px solid #bcbcce44",
-        backgroundColor: (theme) => theme.palette.background.default,
+        height: "60px",
+        p: "1em",
+        backgroundColor: (theme) => theme.palette.background.b1,
       }}
     >
-      <Box>
-        <Typography variant="h1" fontSize={{ xs: "1.5em", sm: "2em" }}>
+      <Box display="flex" gap="16px" alignItems="center">
+        <Typography
+          variant="h4"
+          fontSize={{ xs: "1.4em", sm: "1.8em" }}
+          fontWeight="600"
+          component="h1"
+        >
           <Link
             to={"/"}
             component={RouterLink}
-            color={"primary.main"}
+            color="primary.main"
             sx={{
               textDecoration: "none",
             }}
@@ -41,9 +54,17 @@ export default function NavbarFull({
             Eduvation
           </Link>
         </Typography>
+        <CustomLink label="Courses" to="/courses" />
+        <CustomLink label="Workshops" to="workshops" />
       </Box>
       <SearchBar />
-      <ActionsRight visibleIcons={visibleIcons} />
-    </AppBar>
+      {!isAuth && (
+        <Box display="flex" alignItems="center" gap="16px">
+          <CustomLink label="Sign in" to="signin" />
+          <CustomLink label="Sign up" to="signup" />
+        </Box>
+      )}
+      {isAuth && <ActionsRight visibleIcons={visibleIcons} />}
+    </Box>
   );
 }

@@ -7,6 +7,7 @@ const Logout = () => {
   const queryClient = useQueryClient();
   useEffect(() => {
     localStorage.removeItem("token");
+    queryClient.setQueryData(["isAuth"], () => false);
     queryClient.clear();
     navigate("/signin");
   }, [queryClient, navigate]);

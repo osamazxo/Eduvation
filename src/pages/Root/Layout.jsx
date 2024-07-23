@@ -1,17 +1,14 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 
-import Nav from "../../Components/Nav/Nav.jsx";
+import { NavbarFull } from "shared/ui/Navbar/index.jsx";
 export default function Layout() {
   return (
     <>
-      <Nav/>
-      <div >
+      <NavbarFull />
+      <div>
         <Outlet />
       </div>
     </>
   );
 }
-
-
-

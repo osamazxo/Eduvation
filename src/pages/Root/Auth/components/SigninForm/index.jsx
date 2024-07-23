@@ -5,18 +5,18 @@ import { useFormik } from "formik";
 import axios from "axios";
 import TextField from "@mui/material/TextField";
 import Divider from "@mui/material/Divider";
-import { Box, Button, Link, Stack, Typography } from "@mui/material";
+import { Box, Link, Typography } from "@mui/material";
 
 import { BaseApi } from "../../../../../util/BaseApi.js";
 import toast from "react-hot-toast";
 import SigninData from "./Input.tsx";
 import { LoadingButton } from "@mui/lab";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function SigninForm() {
   let nav = useNavigate();
   let [loading, setLoading] = useState(false);
-  let [showPassword, setShowPassword] = useState(false); // State to control password visibility
-
+  const quetClient = useQueryClient();
   const validationSchema = yup.object().shape({
     email: yup
       .string()
@@ -54,6 +54,7 @@ export default function SigninForm() {
         },
       });
       localStorage.setItem("token", data.BrearerToken);
+      quetClient.setQueryData(["isAuth"], () => true);
       axios.defaults.headers.common["token"] = data.BrearerToken;
       nav("/");
     }

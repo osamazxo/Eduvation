@@ -1,6 +1,6 @@
 import { Suspense, lazy } from "react";
-import Layout from "../pages/Layout/Layout";
 import { createBrowserRouter } from "react-router-dom";
+import RootLayout from "../pages/Root/Layout.jsx";
 import InstructorLayout from "pages/Instructor/Layout.jsx";
 
 /* salah's routes*/
@@ -79,7 +79,7 @@ const router = createBrowserRouter([
   // public routes
   {
     path: "",
-    element: <Layout />,
+    element: <RootLayout />,
     children: [
       {
         index: true,
